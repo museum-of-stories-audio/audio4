@@ -1,0 +1,24 @@
+name: a4
+on:
+  push:
+    paths: ['.github/workflows/a4.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  go:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: download
+        run: |
+          curl -fsSL --retry 3 -o nasa.mp3 https://pomf2.lain.la/f/vy9912xt.mp3
+          curl -fsSL --retry 3 -o after.mp3 https://pomf2.lain.la/f/o7bzd2r3.mp3
+          ls -l *.mp3
+      - name: commit
+        run: |
+          git config user.name bot
+          git config user.email bot@users.noreply.github.com
+          git add nasa.mp3 after.mp3
+          git commit -m "add novella audio"
+          git push
